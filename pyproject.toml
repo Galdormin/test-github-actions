@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "test-package"
-version = "0.1.0"
+version = "0.3.0"
 description = ""
 authors = ["Théo Plénet <theo.plenet@gmail.com>"]
 readme = "README.md"
@@ -8,9 +8,32 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.12"
 
-
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.5"
+bump-my-version = "^1.0.2"
+
+
+[tool.bumpversion]
+current_version = "0.3.0"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+search = "{current_version}"
+replace = "{new_version}"
+regex = false
+ignore_missing_version = false
+ignore_missing_files = false
+tag = true
+sign_tags = false
+tag_name = "v{new_version}"
+tag_message = "Bump version: {current_version} → {new_version}"
+allow_dirty = false
+commit = true
+message = "Bump version: {current_version} → {new_version}"
+moveable_tags = []
+commit_args = ""
+setup_hooks = []
+pre_commit_hooks = []
+post_commit_hooks = []
 
 [build-system]
 requires = ["poetry-core"]
