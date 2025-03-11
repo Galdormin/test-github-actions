@@ -1,6 +1,6 @@
 import pytest
 
-from test_package import add, sub, div, mul
+from test_package.simple_math import add, sub, mul, div, root, square
 
 
 def test_add():
@@ -24,3 +24,12 @@ def test_div():
 
     with pytest.raises(ValueError):
         assert div(5, 0)
+
+
+def test_root():
+    assert root(4) == 2.0
+
+
+def test_square():
+    assert square(2) == 4
+    assert square(-2) == 4
