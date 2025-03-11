@@ -20,6 +20,13 @@ def div(x: int, y: int) -> int:
     return x // y
 
 
+def div_f(x: int, y: int) -> float:
+    if y == 0:
+        raise ValueError("Cannot divide by 0.")
+
+    return x / y
+
+
 def root(x: int) -> float:
     return sqrt(x)
 
