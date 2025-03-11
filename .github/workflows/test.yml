@@ -2,7 +2,7 @@ name: Test
 on: [push]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -16,11 +16,7 @@ jobs:
         python -m pip install --upgrade pip
         pip install poetry
         poetry install --with dev
-  
-  test:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
+    
     - name: Run tests
       run: poetry run pytest
 
