@@ -25,8 +25,6 @@ jobs:
       - name: Bump version
         id: bump
         uses: callowayproject/bump-my-version@master
-        env:
-          BUMPVERSION_TAG: "true"
         with:
           args: ${{ inputs.bump-type }}
           github-token: ${{ github.token }}
