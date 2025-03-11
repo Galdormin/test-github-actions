@@ -39,4 +39,4 @@ def root(x: int) -> float:
 
 def square(x: int) -> int:
     """Compute the square of an integer."""
-    return x * x
+    return x**2
