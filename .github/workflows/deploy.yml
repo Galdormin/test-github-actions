@@ -46,12 +46,6 @@ jobs:
           token: ${{ github.token }}
           tag: 'v${{ steps.bump.outputs.current-version }}'
       
-      - name: Commit Bump version and CHANGELOG.md
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          branch: main
-          commit_message: 'Bump version: ${{ steps.bump.outputs.previous-version }} → ${{ steps.bump.outputs.current-version }}'
-      
       - name: Update version tag
         uses: actions/github-script@v5
         with:
@@ -61,6 +55,17 @@ jobs:
               repo: context.repo.repo,
               ref: 'refs/tags/v${{ steps.bump.outputs.current-version }}'
             })
+
+      - name: Commit Bump version and CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: main
+          commit_message: 'Bump version: ${{ steps.bump.outputs.previous-version }} → ${{ steps.bump.outputs.current-version }}'
+      
+      - name: Add version tag
+        uses: actions/github-script@v5
+        with:
+          script: |
             github.rest.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
