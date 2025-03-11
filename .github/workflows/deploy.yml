@@ -1,9 +1,17 @@
-name: Deploy
+name: Make Release
 
 on:
-  push:
-    tags:
-      - v[0-9]+.[0-9]+.[0-9]+
+  workflow_dispatch:
+    inputs:
+      bump-type:
+        description: 'Bump type'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+        - major
+        - minor
+        - patch
 
 jobs:
   deploy:
@@ -14,24 +22,59 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Bump version
+        id: bump
+        uses: callowayproject/bump-my-version@master
+        env:
+          BUMPVERSION_TAG: "true"
+        with:
+          args: ${{ inputs.bump-type }}
+          github-token: ${{ github.token }}
+      
+      - name: Create version tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/v${{ steps.bump.outputs.current-version }}',
+              sha: context.sha
+            })
+
       - uses: requarks/changelog-action@v1
         id: changelog
         with:
           token: ${{ github.token }}
-          tag: ${{ github.ref_name }}
+          tag: 'v${{ steps.bump.outputs.current-version }}'
       
+      - name: Commit Bump version and CHANGELOG.md
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: main
+          commit_message: 'Bump version: ${{ steps.bump.outputs.current-version }} → ${{ steps.bump.outputs.new-version }}'
+      
+      - name: Update version tag
+        uses: actions/github-script@v5
+        with:
+          script: |
+            github.rest.git.deleteRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/v${{ steps.bump.outputs.current-version }}'
+            })
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: 'refs/tags/v${{ steps.bump.outputs.current-version }}',
+              sha: context.sha
+            })
+
       - uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
           draft: false
           makeLatest: true
-          name: ${{ github.ref_name }}
+          name: 'v${{ steps.bump.outputs.current-version }}'
           body: ${{ steps.changelog.outputs.changes }}
           token: ${{ github.token }}
-      
-      - name: Commit CHANGELOG.md
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          branch: main
-          commit_message: 'docs: update CHANGELOG.md for ${{ github.ref_name }} [skip ci]'
-          file_pattern: CHANGELOG.md
