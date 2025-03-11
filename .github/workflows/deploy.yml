@@ -46,14 +46,14 @@ jobs:
           token: ${{ github.token }}
           tag: 'v${{ steps.bump.outputs.current-version }}'
       
-      - name: Update version tag
+      - name: Delet version tag
         uses: actions/github-script@v5
         with:
           script: |
             github.rest.git.deleteRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: 'refs/tags/v${{ steps.bump.outputs.current-version }}'
+              ref: 'tags/v${{ steps.bump.outputs.current-version }}'
             })
 
       - name: Commit Bump version and CHANGELOG.md
