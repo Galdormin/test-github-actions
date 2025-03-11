@@ -50,7 +50,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           branch: main
-          commit_message: 'Bump version: ${{ steps.bump.outputs.current-version }} → ${{ steps.bump.outputs.new-version }}'
+          commit_message: 'Bump version: ${{ steps.bump.outputs.previous-version }} → ${{ steps.bump.outputs.current-version }}'
       
       - name: Update version tag
         uses: actions/github-script@v5
