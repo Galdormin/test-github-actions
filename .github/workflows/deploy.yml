@@ -21,6 +21,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Bump version
         id: bump
@@ -46,7 +48,7 @@ jobs:
           token: ${{ github.token }}
           tag: 'v${{ steps.bump.outputs.current-version }}'
       
-      - name: Delet version tag
+      - name: Delete version tag
         uses: actions/github-script@v5
         with:
           script: |
