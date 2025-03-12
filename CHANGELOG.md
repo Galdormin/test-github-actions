@@ -1,4 +1,9 @@
 # CHANGELOG
+## [v0.3.2] - 2025-03-12
+### :bug: Bug Fixes
+- [`24a4732`](https://github.com/Galdormin/test-github-actions/commit/24a4732f3252a85613f258841d3c4938f9a0dbd0) - fix some bug *(commit by [@Plenett](https://github.com/Plenett))*
+
+
 ## [v0.3.1] - 2025-03-11
 ### :sparkles: New Features
 - [`5561f69`](https://github.com/Galdormin/test-github-actions/commit/5561f69e3aeb4bf1a1c95083eb3ed120de2fd303) - add float divide to package *(PR [#2](https://github.com/Galdormin/test-github-actions/pull/2) by [@Galdormin](https://github.com/Galdormin))*
@@ -24,3 +29,4 @@
 [v0.2.0]: https://github.com/Galdormin/test-github-actions/compare/v0.1.2...v0.2.0
 [v0.3.0]: https://github.com/Galdormin/test-github-actions/compare/v0.2.0...v0.3.0
 [v0.3.1]: https://github.com/Galdormin/test-github-actions/compare/v0.3.0...v0.3.1
+[v0.3.2]: https://github.com/Galdormin/test-github-actions/compare/v0.3.1...v0.3.2
