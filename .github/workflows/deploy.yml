@@ -96,6 +96,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: 'v${{ needs.bump-version.outputs.current-version }}'
       
       - uses: actions/setup-python@v5
         with:
